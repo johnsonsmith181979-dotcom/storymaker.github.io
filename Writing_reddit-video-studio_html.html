@@ -1,0 +1,2029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><base href="https://d16ilfvy4mv02r.cloudfront.net/workspaces/kL7xdMryQoWVFKG5T1oPsyjK5vOwrzXk/261c8eb1-5b04-43ea-ab4c-efd150780a4b/files/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RedditClips Studio – Viral Video Generator</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #1a1a26;
+    --surface3: #22223a;
+    --border: #2a2a45;
+    --accent: #6c63ff;
+    --accent2: #ff6b6b;
+    --accent3: #ffd93d;
+    --green: #6bcb77;
+    --text: #e8e8f0;
+    --muted: #7878a0;
+    --tiktok: #fe2c55;
+    --youtube: #ff0000;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #0d0d1a 0%, #13133a 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(20px);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: linear-gradient(135deg, var(--accent), #ff6baa);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+
+  .logo h1 { font-size: 20px; font-weight: 800; }
+  .logo span { color: var(--accent); }
+
+  .header-badge {
+    background: linear-gradient(135deg, #ff6b6b22, #ff6b6b44);
+    border: 1px solid #ff6b6b55;
+    color: var(--accent2);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* LAYOUT */
+  .app {
+    display: grid;
+    grid-template-columns: 380px 1fr 320px;
+    gap: 0;
+    height: calc(100vh - 65px);
+  }
+
+  /* LEFT PANEL */
+  .left-panel {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* CENTER PANEL */
+  .center-panel {
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 32px 24px;
+    overflow-y: auto;
+    gap: 20px;
+  }
+
+  /* RIGHT PANEL */
+  .right-panel {
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* SECTION HEADERS */
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+  }
+
+  /* STORY CARD */
+  .story-card {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    border: 1px solid #3a3a6a;
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .story-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), #ff6baa, var(--accent2));
+  }
+
+  .reddit-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .reddit-avatar {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--accent), #ff6baa);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+  }
+
+  .reddit-meta { flex: 1; }
+  .reddit-meta .username { font-size: 13px; font-weight: 600; color: var(--accent); }
+  .reddit-meta .subreddit { font-size: 11px; color: var(--muted); }
+
+  .story-title {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    color: white;
+  }
+
+  .story-body {
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: #c0c0d8;
+    max-height: 140px;
+    overflow-y: auto;
+  }
+
+  .story-body::-webkit-scrollbar { width: 3px; }
+  .story-body::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
+
+  .story-stats {
+    display: flex;
+    gap: 16px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--muted); }
+  .stat span { color: var(--text); font-weight: 600; }
+
+  /* HOOK BADGE */
+  .hook-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #ffd93d22, #ffd93d44);
+    border: 1px solid #ffd93d55;
+    color: var(--accent3);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    white-space: nowrap;
+  }
+
+  .btn:hover { transform: translateY(-1px); }
+  .btn:active { transform: translateY(0); }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), #9b8fff);
+    color: white;
+    box-shadow: 0 4px 20px #6c63ff44;
+  }
+
+  .btn-primary:hover { box-shadow: 0 6px 28px #6c63ff66; }
+
+  .btn-secondary {
+    background: var(--surface3);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+
+  .btn-danger {
+    background: linear-gradient(135deg, var(--accent2), #ff9f9f);
+    color: white;
+    box-shadow: 0 4px 20px #ff6b6b44;
+  }
+
+  .btn-success {
+    background: linear-gradient(135deg, var(--green), #a8e6af);
+    color: #0a2a0e;
+    box-shadow: 0 4px 20px #6bcb7744;
+  }
+
+  .btn-full { width: 100%; }
+
+  .btn-generate {
+    background: linear-gradient(135deg, #ff6b6b, #ffd93d);
+    color: #1a0a00;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 14px 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 28px #ff6b6b55;
+    animation: pulseGlow 2s infinite;
+    width: 100%;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 4px 28px #ff6b6b55; }
+    50% { box-shadow: 0 4px 40px #ff6b6b88, 0 0 60px #ffd93d33; }
+  }
+
+  /* VIDEO PREVIEW */
+  .video-container {
+    position: relative;
+    width: 270px;
+    height: 480px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 0 2px var(--border);
+    flex-shrink: 0;
+  }
+
+  #videoCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .video-overlay-ui {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  /* CAPTION OVERLAY */
+  .caption-overlay {
+    position: absolute;
+    bottom: 80px;
+    left: 10px;
+    right: 10px;
+    text-align: center;
+    pointer-events: none;
+  }
+
+  .caption-word {
+    display: inline;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+    line-height: 1.6;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  }
+
+  .caption-word.highlight {
+    background: var(--accent3);
+    color: #000;
+  }
+
+  /* PLAYBACK CONTROLS */
+  .playback-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 270px;
+  }
+
+  .play-btn {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--accent), #9b8fff);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    box-shadow: 0 4px 16px #6c63ff55;
+  }
+
+  .play-btn:hover { transform: scale(1.1); }
+
+  .progress-bar {
+    flex: 1;
+    height: 4px;
+    background: var(--surface3);
+    border-radius: 99px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #ff6baa);
+    border-radius: 99px;
+    transition: width 0.1s;
+  }
+
+  .time-display { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+  /* BACKGROUND SELECTOR */
+  .bg-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .bg-option {
+    background: var(--surface3);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    position: relative;
+  }
+
+  .bg-option:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .bg-option.selected { border-color: var(--accent); background: #6c63ff15; }
+  .bg-option.selected::after {
+    content: '✓';
+    position: absolute;
+    top: 6px; right: 8px;
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .bg-option .bg-icon { font-size: 28px; margin-bottom: 6px; }
+  .bg-option .bg-name { font-size: 12px; font-weight: 600; }
+  .bg-option .bg-desc { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  /* VOICE SELECTOR */
+  .voice-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .voice-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--surface3);
+  }
+
+  .voice-item:hover { border-color: var(--accent); }
+  .voice-item.selected { border-color: var(--accent); background: #6c63ff15; }
+
+  .voice-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .voice-info { flex: 1; }
+  .voice-info .name { font-size: 13px; font-weight: 600; }
+  .voice-info .desc { font-size: 10px; color: var(--muted); }
+
+  /* PLATFORM CONNECT */
+  .platform-card {
+    border-radius: 14px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .platform-tiktok {
+    background: linear-gradient(135deg, #fe2c5515, #fe2c5530);
+    border: 1px solid #fe2c5555;
+  }
+
+  .platform-youtube {
+    background: linear-gradient(135deg, #ff000015, #ff000030);
+    border: 1px solid #ff000055;
+  }
+
+  .platform-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .platform-tiktok .platform-icon { background: linear-gradient(135deg, #010101, #1a1a1a); }
+  .platform-youtube .platform-icon { background: linear-gradient(135deg, #ff0000, #cc0000); }
+
+  .platform-info { flex: 1; }
+  .platform-info .pname { font-size: 14px; font-weight: 700; }
+  .platform-info .pstatus { font-size: 11px; color: var(--muted); }
+
+  .platform-status-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+
+  .platform-status-dot.connected { background: var(--green); box-shadow: 0 0 8px var(--green); }
+
+  /* INPUT FIELDS */
+  .input-group { display: flex; flex-direction: column; gap: 6px; }
+  .input-label { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; }
+
+  .input-field {
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-size: 13px;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .input-field:focus { outline: none; border-color: var(--accent); }
+  .input-field::placeholder { color: var(--muted); }
+
+  textarea.input-field { resize: vertical; min-height: 80px; }
+
+  /* TOGGLE */
+  .toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+
+  .toggle-label { font-size: 13px; font-weight: 500; }
+  .toggle-sub { font-size: 11px; color: var(--muted); }
+
+  .toggle {
+    width: 44px; height: 24px;
+    background: var(--surface3);
+    border-radius: 99px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.2s;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .toggle.on { background: var(--accent); border-color: var(--accent); }
+
+  .toggle::after {
+    content: '';
+    position: absolute;
+    width: 18px; height: 18px;
+    background: white;
+    border-radius: 50%;
+    top: 2px; left: 2px;
+    transition: left 0.2s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  }
+
+  .toggle.on::after { left: 22px; }
+
+  /* PUBLISH SECTION */
+  .publish-section {
+    background: linear-gradient(135deg, #1a2a1a, #1a3a1a);
+    border: 1px solid #3a6a3a;
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  .publish-title-input {
+    font-size: 15px;
+    font-weight: 700;
+    background: transparent;
+    border: none;
+    color: white;
+    width: 100%;
+    font-family: inherit;
+    line-height: 1.4;
+  }
+
+  .publish-title-input:focus { outline: none; }
+
+  .publish-desc-input {
+    font-size: 12px;
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    width: 100%;
+    font-family: inherit;
+    resize: none;
+    height: 70px;
+    line-height: 1.6;
+  }
+
+  .publish-desc-input:focus { outline: none; color: var(--text); }
+
+  /* PROGRESS MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .modal-overlay.show { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px;
+    max-width: 420px;
+    width: 90%;
+    text-align: center;
+  }
+
+  .modal h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .modal p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+
+  .step-list {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  .step-item.done { color: var(--green); }
+  .step-item.active { color: var(--text); }
+
+  .step-icon {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+    background: var(--surface3);
+    border: 1px solid var(--border);
+  }
+
+  .step-item.done .step-icon { background: var(--green); border-color: var(--green); color: #0a2a0e; }
+  .step-item.active .step-icon {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .modal-progress {
+    height: 6px;
+    background: var(--surface3);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .modal-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), #ff6baa);
+    border-radius: 99px;
+    transition: width 0.5s ease;
+  }
+
+  /* CAPTIONS SETTINGS */
+  .caption-styles {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .caption-style-btn {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface3);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: inherit;
+  }
+
+  .caption-style-btn:hover { border-color: var(--accent); }
+  .caption-style-btn.selected { border-color: var(--accent); background: #6c63ff15; color: var(--text); font-weight: 600; }
+
+  .caption-preview {
+    font-size: 14px;
+    font-weight: 800;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  /* STORY TYPE PILLS */
+  .story-types {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .story-pill {
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface3);
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--muted);
+    transition: all 0.2s;
+  }
+
+  .story-pill:hover { border-color: var(--accent); color: var(--text); }
+  .story-pill.selected { border-color: var(--accent); background: #6c63ff22; color: var(--accent); }
+
+  /* NOTIFICATION TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--surface2);
+    border: 1px solid var(--green);
+    color: var(--green);
+    padding: 12px 24px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 300;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* WAVEFORM */
+  .waveform {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 30px;
+  }
+
+  .wave-bar {
+    width: 3px;
+    background: var(--accent);
+    border-radius: 99px;
+    animation: wave 1s ease-in-out infinite;
+  }
+
+  @keyframes wave {
+    0%, 100% { height: 4px; opacity: 0.4; }
+    50% { height: 24px; opacity: 1; }
+  }
+
+  .scrollbar-style::-webkit-scrollbar { width: 4px; }
+  .scrollbar-style::-webkit-scrollbar-thumb { background: var(--surface3); border-radius: 99px; }
+
+  /* Responsive tweaks */
+  @media (max-width: 1200px) {
+    .app { grid-template-columns: 320px 1fr 280px; }
+  }
+
+  /* Tag chips */
+  .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    background: var(--surface3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* Status indicators */
+  .status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 12px;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .status-row:last-child { border-bottom: none; }
+  .status-row .value { color: var(--text); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">🎬</div>
+    <h1>Reddit<span>Clips</span> Studio</h1>
+  </div>
+  <div class="header-badge">🔥 Viral Machine</div>
+</header>
+
+<!-- MAIN APP -->
+<div class="app">
+
+  <!-- ===== LEFT PANEL: Story & Settings ===== -->
+  <div class="left-panel scrollbar-style">
+
+    <div class="section-title">🎭 Story Type</div>
+    <div class="story-types">
+      <div class="story-pill selected" data-type="revenge">Revenge</div>
+      <div class="story-pill" data-type="confession">Confession</div>
+      <div class="story-pill" data-type="AITA">AITA</div>
+      <div class="story-pill" data-type="drama">Drama</div>
+      <div class="story-pill" data-type="horror">Horror</div>
+      <div class="story-pill" data-type="wholesome">Wholesome</div>
+      <div class="story-pill" data-type="crazy">Crazy Ex</div>
+      <div class="story-pill" data-type="workplace">Workplace</div>
+    </div>
+
+    <div class="section-title">📖 Generated Story</div>
+    <div class="story-card" id="storyCard">
+      <div class="hook-badge">⚡ VIRAL HOOK</div>
+      <div class="reddit-header">
+        <div class="reddit-avatar" id="avatarLetter">U</div>
+        <div class="reddit-meta">
+          <div class="username" id="storyUsername">u/ThrowRA_Justice99</div>
+          <div class="subreddit" id="storySubreddit">r/AmItheAsshole • 14 hours ago</div>
+        </div>
+      </div>
+      <div class="story-title" id="storyTitle">I got my boss fired after he publicly humiliated me at a company meeting in front of 200 people</div>
+      <div class="story-body" id="storyBody">So this happened last Friday and I'm still processing it. I've worked at this company for 3 years and my boss has always been condescending, but what he did last week crossed every line imaginable.
+
+He called a company-wide meeting and decided to use MY project as an example of "what not to do" — except the project he showed wasn't even mine. He'd mixed up the files. But instead of stopping when I pointed it out quietly, he doubled down in front of everyone and said I was "making excuses."
+
+I kept receipts. Every email, every revision, every approval. I sent them all to HR with timestamps. Within 48 hours, they discovered he'd been falsifying performance reviews for 6 employees. He was walked out by security on Monday morning.
+
+UPDATE: I got a promotion. He's under legal investigation. My coworkers literally applauded in the hallway when they heard.</div>
+      <div class="story-stats">
+        <div class="stat">⬆️ <span id="storyUpvotes">47.3k</span></div>
+        <div class="stat">💬 <span id="storyComments">2.4k</span> comments</div>
+        <div class="stat">🏆 <span id="storyAwards">12</span> awards</div>
+      </div>
+    </div>
+
+    <button class="btn btn-generate" onclick="generateNewStory()">
+      🎲 Generate New Viral Story
+    </button>
+
+    <div class="section-title">🎬 Background Video</div>
+    <div class="bg-selector">
+      <div class="bg-option selected" data-bg="gta" onclick="selectBackground('gta', this)">
+        <div class="bg-icon">🚗</div>
+        <div class="bg-name">GTA Driving</div>
+        <div class="bg-desc">City cruising POV</div>
+      </div>
+      <div class="bg-option" data-bg="minecraft" onclick="selectBackground('minecraft', this)">
+        <div class="bg-icon">⛏️</div>
+        <div class="bg-name">Minecraft</div>
+        <div class="bg-desc">Parkour gameplay</div>
+      </div>
+      <div class="bg-option" data-bg="subway" onclick="selectBackground('subway', this)">
+        <div class="bg-icon">🏃</div>
+        <div class="bg-name">Subway Surf</div>
+        <div class="bg-desc">Endless runner</div>
+      </div>
+      <div class="bg-option" data-bg="cooking" onclick="selectBackground('cooking', this)">
+        <div class="bg-icon">👨‍🍳</div>
+        <div class="bg-name">Satisfying</div>
+        <div class="bg-desc">Cooking ASMR</div>
+      </div>
+    </div>
+
+    <div class="section-title">🎙️ Narrator Voice</div>
+    <div class="voice-list">
+      <div class="voice-item selected" data-voice="en-US-guy" onclick="selectVoice(this)">
+        <div class="voice-avatar" style="background:#6c63ff22">🧑</div>
+        <div class="voice-info">
+          <div class="name">Marcus</div>
+          <div class="desc">Deep, dramatic — American male</div>
+        </div>
+        <div class="waveform" id="wave1">
+          <div class="wave-bar" style="animation-delay:0.0s"></div>
+          <div class="wave-bar" style="animation-delay:0.1s"></div>
+          <div class="wave-bar" style="animation-delay:0.2s"></div>
+          <div class="wave-bar" style="animation-delay:0.15s"></div>
+          <div class="wave-bar" style="animation-delay:0.05s"></div>
+        </div>
+      </div>
+      <div class="voice-item" data-voice="en-US-ashley" onclick="selectVoice(this)">
+        <div class="voice-avatar" style="background:#ff6baa22">👩</div>
+        <div class="voice-info">
+          <div class="name">Ashley</div>
+          <div class="desc">Expressive, relatable — American female</div>
+        </div>
+      </div>
+      <div class="voice-item" data-voice="en-GB-james" onclick="selectVoice(this)">
+        <div class="voice-avatar" style="background:#ffd93d22">🎩</div>
+        <div class="voice-info">
+          <div class="name">James</div>
+          <div class="desc">Crisp, authoritative — British male</div>
+        </div>
+      </div>
+      <div class="voice-item" data-voice="en-AU-aria" onclick="selectVoice(this)">
+        <div class="voice-avatar" style="background:#6bcb7722">🦘</div>
+        <div class="voice-info">
+          <div class="name">Aria</div>
+          <div class="desc">Casual, upbeat — Australian female</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== CENTER PANEL: Video Preview ===== -->
+  <div class="center-panel">
+
+    <div style="text-align:center; margin-bottom:4px;">
+      <div style="font-size:11px; color:var(--muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:8px;">📱 9:16 Preview</div>
+    </div>
+
+    <!-- VIDEO PREVIEW -->
+    <div class="video-container">
+      <canvas id="videoCanvas" width="270" height="480"></canvas>
+      <div class="caption-overlay" id="captionOverlay">
+        <span class="caption-word">Tap <b>Play</b></span>&nbsp;<span class="caption-word highlight">to Preview</span>
+      </div>
+      <!-- Simulated top UI overlay -->
+      <div style="position:absolute; top:12px; left:12px; right:12px; display:flex; align-items:center; justify-content:space-between; pointer-events:none;">
+        <div style="display:flex; align-items:center; gap:6px;">
+          <div style="width:8px;height:8px;background:#ff4444;border-radius:50%;"></div>
+          <span style="font-size:10px;color:rgba(255,255,255,0.7);font-weight:600;">LIVE PREVIEW</span>
+        </div>
+        <div style="font-size:10px;color:rgba(255,255,255,0.6);" id="videoDuration">0:47</div>
+      </div>
+    </div>
+
+    <!-- PLAYBACK CONTROLS -->
+    <div class="playback-controls">
+      <button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
+      <div class="progress-bar" onclick="seekVideo(event)">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <span class="time-display" id="timeDisplay">0:00 / 0:47</span>
+    </div>
+
+    <!-- GENERATE VIDEO BUTTON -->
+    <button class="btn btn-primary btn-full" style="font-size:15px;font-weight:800;padding:16px;border-radius:14px;max-width:440px;" onclick="generateVideo()">
+      ⚡ Generate Video
+    </button>
+
+    <!-- CAPTION STYLE OPTIONS -->
+    <div class="card" style="width:100%;max-width:440px;">
+      <div class="section-title" style="margin-bottom:12px;">💬 Caption Style</div>
+      <div class="caption-styles">
+        <button class="caption-style-btn selected" onclick="selectCaption('bold', this)">
+          <span class="caption-preview" style="color:#fff;font-weight:900;">BOLD</span>
+          Classic
+        </button>
+        <button class="caption-style-btn" onclick="selectCaption('karaoke', this)">
+          <span class="caption-preview" style="color:#ffd93d;font-weight:900;">KARA</span>
+          Karaoke
+        </button>
+        <button class="caption-style-btn" onclick="selectCaption('outline', this)">
+          <span class="caption-preview" style="color:#fff;-webkit-text-stroke:1px #000;font-weight:900;">OUTL</span>
+          Outline
+        </button>
+      </div>
+
+      <div class="toggle-row" style="margin-top:12px;">
+        <div>
+          <div class="toggle-label">Auto-captions</div>
+          <div class="toggle-sub">Sync words to audio</div>
+        </div>
+        <div class="toggle on" id="captionToggle" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Highlight keywords</div>
+          <div class="toggle-sub">Yellow accent on impact words</div>
+        </div>
+        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Emoji reactions</div>
+          <div class="toggle-sub">Add emoji at key moments</div>
+        </div>
+        <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+      </div>
+    </div>
+
+    <!-- VIDEO SPECS -->
+    <div class="card" style="width:100%;max-width:440px;">
+      <div class="section-title" style="margin-bottom:12px;">📊 Video Specs</div>
+      <div class="status-row">
+        <span>Format</span>
+        <span class="value">9:16 Vertical (TikTok/Reels)</span>
+      </div>
+      <div class="status-row">
+        <span>Resolution</span>
+        <span class="value">1080 × 1920</span>
+      </div>
+      <div class="status-row">
+        <span>Duration</span>
+        <span class="value" id="specDuration">~47 seconds</span>
+      </div>
+      <div class="status-row">
+        <span>Background</span>
+        <span class="value" id="specBg">GTA Driving POV</span>
+      </div>
+      <div class="status-row">
+        <span>Narrator</span>
+        <span class="value" id="specVoice">Marcus (Deep American)</span>
+      </div>
+      <div class="status-row">
+        <span>Captions</span>
+        <span class="value">AI-Synced ✓</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== RIGHT PANEL: Publish ===== -->
+  <div class="right-panel scrollbar-style">
+
+    <div class="section-title">🔗 Connected Platforms</div>
+
+    <!-- TikTok Connect -->
+    <div class="platform-card platform-tiktok" onclick="connectPlatform('tiktok')">
+      <div class="platform-icon">🎵</div>
+      <div class="platform-info">
+        <div class="pname">TikTok</div>
+        <div class="pstatus" id="tiktokStatus">Not connected</div>
+      </div>
+      <div class="platform-status-dot" id="tiktokDot"></div>
+    </div>
+
+    <!-- YouTube Connect -->
+    <div class="platform-card platform-youtube" onclick="connectPlatform('youtube')">
+      <div class="platform-icon">▶️</div>
+      <div class="platform-info">
+        <div class="pname">YouTube Shorts</div>
+        <div class="pstatus" id="youtubeStatus">Not connected</div>
+      </div>
+      <div class="platform-status-dot" id="youtubeDot"></div>
+    </div>
+
+    <!-- Channel Input -->
+    <div id="channelInputSection" style="display:none;">
+      <div class="input-group">
+        <div class="input-label">TikTok Channel URL</div>
+        <input class="input-field" type="text" id="tiktokUrl" placeholder="@yourchannel or paste URL" />
+      </div>
+      <div class="input-group" style="margin-top:10px;">
+        <div class="input-label">YouTube Channel URL</div>
+        <input class="input-field" type="text" id="youtubeUrl" placeholder="youtube.com/@yourchannel" />
+      </div>
+      <button class="btn btn-secondary btn-full" style="margin-top:10px;" onclick="saveChannels()">Save Channels</button>
+    </div>
+
+    <div class="section-title">📝 Auto-Generated Post</div>
+
+    <div class="publish-section">
+      <div style="font-size:11px;color:var(--green);margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+        ✨ <span>AI-Generated</span>
+      </div>
+
+      <div class="input-group" style="margin-bottom:12px;">
+        <div class="input-label">Title</div>
+        <textarea class="input-field" id="publishTitle" style="min-height:60px;font-weight:700;font-size:13px;">My boss publicly humiliated me in front of 200 people… so I got him fired 🔥 #WorkRevenge #Reddit</textarea>
+      </div>
+
+      <div class="input-group">
+        <div class="input-label">Description</div>
+        <textarea class="input-field" id="publishDesc" style="min-height:100px;">This Reddit story will have your jaw DROPPING. After 3 years of putting up with a nightmare boss, one company meeting changed everything. What would YOU have done? 👇
+
+#Reddit #AITA #WorkDrama #Revenge #TrueStory #RevengeStory #Satisfying #Shorts</textarea>
+      </div>
+
+      <div class="tag-list" id="hashtagList" style="margin-top:10px;">
+        <div class="tag">#Reddit</div>
+        <div class="tag">#AITA</div>
+        <div class="tag">#WorkDrama</div>
+        <div class="tag">#Revenge</div>
+        <div class="tag">#TrueStory</div>
+        <div class="tag">#Shorts</div>
+      </div>
+    </div>
+
+    <!-- POST SETTINGS -->
+    <div class="card">
+      <div class="section-title" style="margin-bottom:12px;">⚙️ Post Settings</div>
+
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Post to TikTok</div>
+          <div class="toggle-sub" id="tiktokToggleSub">Connect TikTok first</div>
+        </div>
+        <div class="toggle" id="tiktokToggle" onclick="this.classList.toggle('on')"></div>
+      </div>
+
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Post to YouTube</div>
+          <div class="toggle-sub" id="youtubeToggleSub">Connect YouTube first</div>
+        </div>
+        <div class="toggle" id="youtubeToggle" onclick="this.classList.toggle('on')"></div>
+      </div>
+
+      <div class="toggle-row">
+        <div>
+          <div class="toggle-label">Schedule Post</div>
+          <div class="toggle-sub">Best time: 7PM–9PM local</div>
+        </div>
+        <div class="toggle" id="scheduleToggle" onclick="toggleSchedule(this)"></div>
+      </div>
+
+      <div id="scheduleInput" style="display:none; margin-top:10px;">
+        <input type="datetime-local" class="input-field" id="scheduleTime" />
+      </div>
+    </div>
+
+    <!-- PUBLISH BUTTON -->
+    <button class="btn btn-success btn-full" style="font-size:15px;font-weight:800;padding:16px;border-radius:14px;" onclick="publishVideo()">
+      🚀 Publish Now
+    </button>
+
+    <button class="btn btn-ghost btn-full" onclick="regenerateMetadata()">
+      🔄 Regenerate Title & Tags
+    </button>
+
+    <!-- ANALYTICS PREVIEW -->
+    <div class="card" style="background: linear-gradient(135deg, #1a1a2e, #0d0d1a);">
+      <div class="section-title" style="margin-bottom:12px;">📈 Predicted Performance</div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;">
+            <span style="color:var(--muted)">Virality Score</span>
+            <span style="color:var(--accent3);font-weight:700;">87/100 🔥</span>
+          </div>
+          <div style="height:5px;background:var(--surface3);border-radius:99px;overflow:hidden;">
+            <div style="width:87%;height:100%;background:linear-gradient(90deg,#6c63ff,#ffd93d);border-radius:99px;"></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;">
+            <span style="color:var(--muted)">Hook Strength</span>
+            <span style="color:var(--green);font-weight:700;">92/100 ✓</span>
+          </div>
+          <div style="height:5px;background:var(--surface3);border-radius:99px;overflow:hidden;">
+            <div style="width:92%;height:100%;background:linear-gradient(90deg,var(--green),#a8e6af);border-radius:99px;"></div>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;">
+            <span style="color:var(--muted)">Projected Views</span>
+            <span style="font-weight:700;">50k–500k</span>
+          </div>
+          <div style="height:5px;background:var(--surface3);border-radius:99px;overflow:hidden;">
+            <div style="width:74%;height:100%;background:linear-gradient(90deg,#ff6b6b,#ffd93d);border-radius:99px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- GENERATION MODAL -->
+<div class="modal-overlay" id="genModal">
+  <div class="modal">
+    <div style="font-size:40px; margin-bottom:12px;" id="modalEmoji">⚡</div>
+    <h3 id="modalTitle">Generating Your Video</h3>
+    <p id="modalDesc">AI is crafting your viral clip...</p>
+
+    <div class="step-list" id="stepList">
+      <div class="step-item done" id="step1">
+        <div class="step-icon">✓</div>
+        <span>Story generated & formatted</span>
+      </div>
+      <div class="step-item active" id="step2">
+        <div class="step-icon">↻</div>
+        <span>Rendering narrator audio...</span>
+      </div>
+      <div class="step-item" id="step3">
+        <div class="step-icon">3</div>
+        <span>Composing background footage</span>
+      </div>
+      <div class="step-item" id="step4">
+        <div class="step-icon">4</div>
+        <span>Syncing captions to voice</span>
+      </div>
+      <div class="step-item" id="step5">
+        <div class="step-icon">5</div>
+        <span>Encoding final 9:16 video</span>
+      </div>
+    </div>
+
+    <div class="modal-progress">
+      <div class="modal-progress-fill" id="modalProgressFill" style="width:25%"></div>
+    </div>
+
+    <div id="modalStatus" style="font-size:12px;color:var(--muted);">Estimated time: ~45 seconds</div>
+  </div>
+</div>
+
+<!-- PUBLISH MODAL -->
+<div class="modal-overlay" id="publishModal">
+  <div class="modal">
+    <div style="font-size:40px; margin-bottom:12px;">🚀</div>
+    <h3>Publishing Video</h3>
+    <p>Your clip is going live across platforms!</p>
+    <div class="step-list">
+      <div class="step-item active" id="pub1">
+        <div class="step-icon">↻</div>
+        <span>Uploading to TikTok...</span>
+      </div>
+      <div class="step-item" id="pub2">
+        <div class="step-icon">2</div>
+        <span>Uploading to YouTube Shorts...</span>
+      </div>
+      <div class="step-item" id="pub3">
+        <div class="step-icon">3</div>
+        <span>Setting title & description...</span>
+      </div>
+      <div class="step-item" id="pub4">
+        <div class="step-icon">4</div>
+        <span>Applying hashtags & SEO tags</span>
+      </div>
+    </div>
+    <div class="modal-progress">
+      <div class="modal-progress-fill" id="pubProgressFill" style="width:10%"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span id="toastMsg">✅ Video generated successfully!</span>
+</div>
+
+<script>
+// ============================
+// STORY DATA
+// ============================
+const stories = [
+  {
+    type: "revenge",
+    username: "u/ThrowRA_Justice99",
+    subreddit: "r/AmItheAsshole • 14 hours ago",
+    title: "I got my boss fired after he publicly humiliated me in front of 200 people",
+    body: `So this happened last Friday and I'm still processing it. I've worked at this company for 3 years and my boss has always been condescending, but what he did last week crossed every line imaginable.\n\nHe called a company-wide meeting and decided to use MY project as an example of "what not to do" — except the project he showed wasn't even mine. He'd mixed up the files. But instead of stopping when I pointed it out quietly, he doubled down in front of everyone and said I was "making excuses."\n\nI kept receipts. Every email, every revision, every approval. I sent them all to HR with timestamps. Within 48 hours, they discovered he'd been falsifying performance reviews for 6 employees. He was walked out by security on Monday morning.\n\nUPDATE: I got a promotion. He's under legal investigation. My coworkers literally applauded in the hallway when they heard.`,
+    upvotes: "47.3k", comments: "2.4k", awards: "12",
+    title_post: "My boss publicly humiliated me in front of 200 people… so I got him fired 🔥 #WorkRevenge #Reddit",
+    desc: "This Reddit story will have your jaw DROPPING. After 3 years of putting up with a nightmare boss, one company meeting changed everything. What would YOU have done? 👇\n\n#Reddit #AITA #WorkDrama #Revenge #TrueStory #RevengeStory #Satisfying #Shorts",
+    tags: ["#Reddit","#AITA","#WorkDrama","#Revenge","#TrueStory","#Shorts"],
+    score: 87, hook: 92, views: "50k–500k"
+  },
+  {
+    type: "confession",
+    username: "u/ConfessedIt_2024",
+    subreddit: "r/confession • 2 hours ago",
+    title: "I accidentally found out my entire family has been lying to me about who my real father is for 31 years",
+    body: `I'm 31 years old and last Tuesday I did one of those ancestry DNA kits on a whim. I expected it to be boring. Instead I discovered I have a half-sibling I've never heard of — and their father is my mom's college friend who's been at every single family Christmas for my entire life.\n\nI called my mom. She went completely silent for 45 seconds — I counted. Then she said "where are you right now."\n\nShe drove to my apartment at 11pm and cried for two hours. My dad (who I now know is not my biological father) knows. Has always known. They both decided to "protect me" by never saying anything.\n\nThe man who is actually my biological father is someone I've called "Uncle Dave" my entire life and he's been watching me grow up from a distance this whole time.\n\nI don't know how to exist right now.`,
+    upvotes: "89.1k", comments: "5.7k", awards: "28",
+    title_post: "I did a DNA test for fun… and found out my whole life was a lie 😱 #FamilySecrets #Reddit",
+    desc: "Wait until you hear what this Reddit user discovered from a simple DNA test. This one will stay with you. Drop a ❤️ if you felt this.\n\n#Reddit #FamilySecret #DNATest #TrueStory #Shorts #Viral",
+    tags: ["#FamilySecret","#DNATest","#Reddit","#TrueStory","#Shorts"],
+    score: 94, hook: 96, views: "200k–2M"
+  },
+  {
+    type: "AITA",
+    username: "u/PettySandwich_Throwaway",
+    subreddit: "r/AmItheAsshole • 6 hours ago",
+    title: "AITA for telling my sister her fiancé has been texting me for 2 years? She said I ruined her engagement.",
+    body: `My sister Sarah has been with Jake for 4 years and they got engaged in September. I was happy for them.\n\nExcept Jake has been texting me — and only me — late at night since they started dating. Not flirty texts. Venting texts. He complains about Sarah constantly. Calls her exhausting, says he's "trapped," says he wishes he'd met someone like me instead.\n\nI never responded encouraging it. I said things like "you should talk to her" or "I don't think this is appropriate."\n\nWhen Sarah showed me the ring I finally cracked and forwarded her the full text history — 2 years of it. Every message.\n\nShe called me in tears saying I "chose the worst possible time" to destroy her relationship. Their family is saying I'm jealous and made up screenshots. Jake is denying everything.\n\nBut I have receipts. 847 messages.\n\nAm I the asshole here?`,
+    upvotes: "62.8k", comments: "4.1k", awards: "19",
+    title_post: "Her fiancé was secretly texting me for 2 YEARS… so I told her everything 👀 #AITA #Reddit",
+    desc: "This situation is WILD. What would you have done — stayed silent or told the truth? Comment below!\n\n#AITA #Reddit #Drama #RelationshipAdvice #TrueStory #Shorts #Viral",
+    tags: ["#AITA","#Reddit","#Drama","#RelationshipAdvice","#Shorts"],
+    score: 91, hook: 89, views: "100k–1M"
+  },
+  {
+    type: "horror",
+    username: "u/NightShiftNurse_RN",
+    subreddit: "r/nosleep • 9 hours ago",
+    title: "Something has been answering the call light in Room 11 for 6 months. Room 11 has been empty for 6 months.",
+    body: `I'm a night shift nurse at a long-term care facility. We use a call light system — patients press a button, a light appears above their door, it buzzes at the desk.\n\nRoom 11's patient passed away in March. Natural causes. We cleaned the room, locked it, and it's been sitting empty ever since while we wait on renovations.\n\nThe call light in Room 11 still goes off. Every night, between 2 and 3 AM.\n\nAt first we thought it was a wiring issue. Maintenance checked it three times. They disconnected the button from the bed. The light still goes off.\n\nLast Thursday I actually went to the room instead of just resetting the system. I stood outside Room 11 at 2:17 AM and listened. I could hear breathing on the other side of the door. Slow. Rhythmic. Like someone in a deep sleep.\n\nI did not open the door.\n\nI put in my two weeks this morning.`,
+    upvotes: "103.4k", comments: "6.2k", awards: "41",
+    title_post: "The call light in the empty hospital room kept going off every night at 2AM 😰 #Horror #Reddit",
+    desc: "This nurse's story gave me chills I can't shake. Watch until the end — the last part is TERRIFYING.\n\n#Horror #Scary #Reddit #Nosleep #TrueStory #Creepy #Shorts",
+    tags: ["#Horror","#Scary","#Reddit","#Nosleep","#Creepy","#Shorts"],
+    score: 96, hook: 98, views: "500k–5M"
+  },
+  {
+    type: "wholesome",
+    username: "u/SurprisePartyDad",
+    subreddit: "r/wholesome • 3 hours ago",
+    title: "I spent 3 months secretly learning my daughter's favorite song on guitar for her wedding. She didn't know I could play.",
+    body: `My daughter Emma is getting married next month. She's 27. For her whole life she's known me as the guy who can barely operate a TV remote — definitely not a musician.\n\nBut 3 months ago I found out her favorite song is "The Book of Love" by Peter Gabriel. It's the song she and her fiancé slow danced to on their first date. She mentioned once that she wished she could walk down the aisle to a live version.\n\nI found a guitar teacher. I practiced every single day in the garage after she went home. I wore calluses into my fingers. My wife knew. She cried every time she heard me getting better.\n\nThis Saturday, Emma is going to walk into the ceremony expecting a playlist. Instead her dad is going to be standing there with a guitar.\n\nI finally got through the whole song without messing up yesterday. I ugly cried in the garage for 20 minutes.\n\nUpdate: She ran down the aisle. Neither of us made it through without crying. Neither did anyone else.`,
+    upvotes: "218.7k", comments: "8.3k", awards: "87",
+    title_post: "He secretly learned guitar for 3 months so he could surprise his daughter at her wedding 🥺 #Wholesome",
+    desc: "I am NOT okay after watching this. This is the kind of parent everyone deserves. Grab some tissues 🥲\n\n#Wholesome #Heartwarming #Reddit #Dad #Wedding #TrueStory #Shorts",
+    tags: ["#Wholesome","#Heartwarming","#Dad","#Wedding","#Shorts"],
+    score: 98, hook: 95, views: "1M–10M"
+  },
+  {
+    type: "drama",
+    username: "u/ChaoticBrideUpdate",
+    subreddit: "r/weddingshaming • 1 hour ago",
+    title: "My MOH told my entire wedding party that I was pregnant right before I walked down the aisle. I had just found out that morning. She saw me throwing up.",
+    body: `I got married yesterday. I should be on my honeymoon right now but instead I'm sitting in a hotel bathroom trying to process what happened.\n\nI found out I was pregnant at 7am on my wedding day. Happy tears, total shock, I told my husband-to-be and we both cried. We agreed to keep it quiet until the ceremony was over because we wanted to enjoy our day.\n\nMy MOH — my best friend since college — saw me getting sick and I quietly told her so she'd understand why I looked pale. I made her promise not to say anything.\n\nShe announced it. To the whole bridal party. 20 minutes before I walked down the aisle. "Guys, she's pregnant, that's why she's not drinking!"\n\nBy the time I walked down the aisle, everyone knew. My mother-in-law was crying. My own mother was shocked she wasn't told first. My husband found out from his best man instead of from me.\n\nI don't know if I can forgive her.`,
+    upvotes: "54.6k", comments: "3.9k", awards: "15",
+    title_post: "Her best friend announced her pregnancy to the whole wedding party WITHOUT permission 😤 #WeddingDrama",
+    desc: "On her OWN wedding day. The audacity is unreal. What would you have done? 👇\n\n#WeddingDrama #Reddit #Drama #BridalParty #TrueStory #Viral #Shorts",
+    tags: ["#WeddingDrama","#Reddit","#Drama","#TrueStory","#Shorts"],
+    score: 88, hook: 93, views: "75k–750k"
+  }
+];
+
+let currentStoryIndex = 0;
+let isPlaying = false;
+let animFrame = null;
+let progress = 0;
+let selectedBg = 'gta';
+let selectedVoice = 'en-US-guy';
+let tiktokConnected = false;
+let youtubeConnected = false;
+let videoGenerated = false;
+
+// ============================
+// CANVAS ANIMATION
+// ============================
+const canvas = document.getElementById('videoCanvas');
+const ctx = canvas.getContext('2d');
+let frameCount = 0;
+
+const bgColors = {
+  gta: { sky: ['#1a0a2e','#2d1b4e','#1a0a2e'], road: '#1a1a2a', stripe: '#ffd93d' },
+  minecraft: { sky: ['#5bb8f5','#87ceeb','#5bb8f5'], road: '#228B22', stripe: '#8B4513' },
+  subway: { sky: ['#ff6b6b','#ee5a24','#ff6b6b'], road: '#2d3436', stripe: '#0984e3' },
+  cooking: { sky: ['#f9ca24','#f0932b','#f9ca24'], road: '#6c5ce7', stripe: '#fdcb6e' }
+};
+
+function drawFrame() {
+  const w = 270, h = 480;
+  const bg = bgColors[selectedBg];
+
+  // Background gradient
+  const grad = ctx.createLinearGradient(0, 0, 0, h);
+  grad.addColorStop(0, bg.sky[0]);
+  grad.addColorStop(0.5, bg.sky[1]);
+  grad.addColorStop(1, bg.sky[2]);
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+
+  if (selectedBg === 'gta') drawGTAScene();
+  else if (selectedBg === 'minecraft') drawMinecraftScene();
+  else if (selectedBg === 'subway') drawSubwayScene();
+  else drawCookingScene();
+
+  // Dark vignette overlay
+  const vignette = ctx.createRadialGradient(w/2, h/2, h*0.2, w/2, h/2, h*0.8);
+  vignette.addColorStop(0, 'rgba(0,0,0,0)');
+  vignette.addColorStop(1, 'rgba(0,0,0,0.5)');
+  ctx.fillStyle = vignette;
+  ctx.fillRect(0, 0, w, h);
+
+  // Reddit card overlay
+  drawRedditCard();
+
+  frameCount++;
+}
+
+function drawGTAScene() {
+  const w = 270, h = 480;
+  const speed = isPlaying ? frameCount * 3 : 0;
+
+  // City skyline
+  ctx.fillStyle = '#0d0d1a';
+  const buildings = [[20,180,40,120],[70,160,35,140],[110,140,50,160],[170,170,45,130],[220,155,40,145]];
+  buildings.forEach(([x,y,bw,bh]) => {
+    ctx.fillRect(x, y, bw, bh);
+    ctx.fillStyle = '#ffd93d33';
+    for(let wx=x+5; wx<x+bw-5; wx+=12) {
+      for(let wy=y+10; wy<y+bh-10; wy+=18) {
+        if(Math.random()>0.5) { ctx.fillStyle='#ffd93daa'; ctx.fillRect(wx,wy,6,8); }
+        ctx.fillStyle = '#ffd93d33';
+      }
+    }
+    ctx.fillStyle = '#0d0d1a';
+  });
+
+  // Road
+  ctx.fillStyle = '#1a1a2a';
+  ctx.fillRect(0, 300, w, 180);
+
+  // Road lines (animated)
+  ctx.fillStyle = '#ffd93d';
+  for(let i = 0; i < 6; i++) {
+    const yPos = 320 + i * 30 - (speed % 30);
+    ctx.fillRect(120, yPos, 30, 15);
+  }
+
+  // Side lines
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(30, 300, 5, 180);
+  ctx.fillRect(235, 300, 5, 180);
+
+  // Car silhouette
+  ctx.fillStyle = '#ff6b6b';
+  ctx.fillRect(100, 380, 70, 30);
+  ctx.fillRect(110, 365, 50, 22);
+  ctx.fillStyle = '#333';
+  ctx.beginPath();
+  ctx.arc(115, 412, 12, 0, Math.PI*2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(155, 412, 12, 0, Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle = '#6c63ff44';
+  ctx.fillRect(112, 368, 46, 16);
+}
+
+function drawMinecraftScene() {
+  const w = 270, h = 480;
+  const offset = isPlaying ? frameCount * 4 : 0;
+
+  // Sky
+  ctx.fillStyle = '#5bb8f5';
+  ctx.fillRect(0, 0, w, 220);
+
+  // Clouds (pixel style)
+  ctx.fillStyle = 'rgba(255,255,255,0.8)';
+  const cloudX = (200 - offset*0.3) % (w+60) - 30;
+  [[cloudX,40],[cloudX+130,70]].forEach(([cx,cy]) => {
+    ctx.fillRect(cx, cy, 60, 20);
+    ctx.fillRect(cx+10, cy-10, 40, 10);
+  });
+
+  // Grass platform
+  ctx.fillStyle = '#2d7d2d';
+  ctx.fillRect(0, 220, w, 20);
+  ctx.fillStyle = '#1a5c1a';
+  ctx.fillRect(0, 240, w, 240);
+
+  // Blocks (parkour platforms)
+  const blockY = [(offset % 80), 30 + (offset % 60), 60 + (offset % 70)];
+  const platforms = [
+    [20 - (offset % w), 270, 50, 20],
+    [90 - (offset * 0.5 % w), 310, 60, 20],
+    [170 - (offset * 0.3 % w), 260, 45, 20],
+    [220 - (offset % w), 300, 55, 20],
+  ];
+
+  platforms.forEach(([x,y,pw,ph]) => {
+    ctx.fillStyle = '#7ec850';
+    ctx.fillRect(x, y, pw, ph);
+    ctx.fillStyle = '#5a8f30';
+    ctx.fillRect(x, y+ph-8, pw, 8);
+    // Pixel detail
+    ctx.fillStyle = '#ffffff22';
+    ctx.fillRect(x, y, 4, 4);
+    ctx.fillRect(x+pw-4, y, 4, 4);
+  });
+
+  // Steve (player character)
+  ctx.fillStyle = '#5bb8f5';
+  ctx.fillRect(125, 230, 20, 8); // head
+  ctx.fillStyle = '#7777ff';
+  ctx.fillRect(125, 238, 20, 14); // body
+  ctx.fillStyle = '#4444bb';
+  ctx.fillRect(122, 252, 8, 12); // legs
+  ctx.fillRect(135, 252, 8, 12);
+}
+
+function drawSubwayScene() {
+  const w = 270, h = 480;
+  const speed = isPlaying ? frameCount * 5 : 0;
+
+  // Track
+  ctx.fillStyle = '#2d3436';
+  ctx.fillRect(0, 250, w, 230);
+  ctx.fillStyle = '#555';
+  for(let i=0; i<8; i++) {
+    const y = 260 + i * 28 - (speed % 28);
+    ctx.fillRect(0, y, w, 6);
+  }
+
+  // Rails
+  ctx.fillStyle = '#b2bec3';
+  ctx.fillRect(60, 250, 8, 230);
+  ctx.fillRect(200, 250, 8, 230);
+
+  // Buildings scrolling
+  const bldX = -(speed * 0.4) % (w * 2);
+  [[bldX, 100, 60, 160],[bldX+80, 80, 70, 180],[bldX+160, 110, 55, 150],
+   [bldX+w, 90, 65, 170],[bldX+w+80, 75, 80, 190]].forEach(([x,y,bw,bh]) => {
+    ctx.fillStyle = `hsl(${240+Math.random()*30},30%,${15+Math.random()*10}%)`;
+    ctx.fillRect(x, y, bw, bh);
+  });
+}
+
+function drawCookingScene() {
+  const w = 270, h = 480;
+  // Pan
+  ctx.fillStyle = '#2d3436';
+  ctx.fillRect(50, 200, 170, 120);
+  ctx.fillRect(30, 220, 20, 10);
+  ctx.fillRect(220, 220, 20, 10);
+
+  // Food sizzling
+  const time = Date.now() / 1000;
+  ctx.fillStyle = '#f9ca24';
+  ctx.beginPath();
+  ctx.ellipse(135, 260, 50 + Math.sin(time*3)*3, 35 + Math.cos(time*2)*2, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  ctx.fillStyle = '#ff9f43';
+  ctx.beginPath();
+  ctx.ellipse(135, 260, 25, 18, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // Steam
+  for(let i=0; i<4; i++) {
+    const steamX = 90 + i*30;
+    const steamY = 200 - (time*30 + i*20) % 80;
+    ctx.strokeStyle = `rgba(255,255,255,${0.3 - (time*0.3 + i*0.1) % 0.3})`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(steamX, steamY+40);
+    ctx.bezierCurveTo(steamX-10, steamY+20, steamX+10, steamY+10, steamX, steamY);
+    ctx.stroke();
+  }
+}
+
+function drawRedditCard() {
+  const w = 270;
+  const cardH = 110;
+  const cardY = 12;
+  const cardX = 10;
+  const cardW = w - 20;
+
+  ctx.fillStyle = 'rgba(17,17,24,0.92)';
+  roundRect(ctx, cardX, cardY, cardW, cardH, 12);
+  ctx.fill();
+
+  ctx.strokeStyle = 'rgba(108,99,255,0.4)';
+  ctx.lineWidth = 1;
+  roundRect(ctx, cardX, cardY, cardW, cardH, 12);
+  ctx.stroke();
+
+  // Reddit icon
+  ctx.fillStyle = '#ff4500';
+  ctx.beginPath();
+  ctx.arc(cardX+18, cardY+18, 9, 0, Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle = 'white';
+  ctx.font = 'bold 11px Arial';
+  ctx.fillText('r/', cardX+13, cardY+22);
+
+  // Username
+  ctx.fillStyle = '#7878a0';
+  ctx.font = '9px Inter, Arial';
+  ctx.fillText(document.getElementById('storyUsername').textContent, cardX+32, cardY+14);
+  ctx.fillStyle = '#6c63ff';
+  ctx.fillText(document.getElementById('storySubreddit').textContent.split('•')[0].trim(), cardX+32, cardY+25);
+
+  // Story title (word wrap)
+  ctx.fillStyle = 'white';
+  ctx.font = 'bold 10px Inter, Arial';
+  const title = document.getElementById('storyTitle').textContent;
+  const words = title.split(' ');
+  let line = '';
+  let ty = cardY + 44;
+  for(let word of words) {
+    const test = line + word + ' ';
+    if(ctx.measureText(test).width > cardW - 16 && line !== '') {
+      ctx.fillText(line.trim(), cardX+8, ty);
+      line = word + ' ';
+      ty += 13;
+      if(ty > cardY + cardH - 20) { ctx.fillText('...', cardX+8, ty); break; }
+    } else { line = test; }
+  }
+  if(ty <= cardY + cardH - 20) ctx.fillText(line.trim(), cardX+8, ty);
+
+  // Awards
+  ctx.fillStyle = '#7878a0';
+  ctx.font = '9px Inter, Arial';
+  ctx.fillText(`⬆ ${document.getElementById('storyUpvotes').textContent}   💬 ${document.getElementById('storyComments').textContent}`, cardX+8, cardY+cardH-10);
+}
+
+function roundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.lineTo(x+w-r, y);
+  ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+  ctx.lineTo(x+w, y+h-r);
+  ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+  ctx.lineTo(x+r, y+h);
+  ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+  ctx.lineTo(x, y+r);
+  ctx.quadraticCurveTo(x, y, x+r, y);
+  ctx.closePath();
+}
+
+// Initial draw
+drawFrame();
+setInterval(() => { if(isPlaying) { drawFrame(); } }, 33);
+
+// ============================
+// CAPTION ANIMATION
+// ============================
+const storyWords = "I got my boss fired after he publicly humiliated me in front of two hundred people. I kept every receipt. Every email, every revision, every approval. Within 48 hours HR discovered he had been falsifying performance reviews for six employees. He was walked out by security. I got a promotion.".split(' ');
+let captionIndex = 0;
+let captionTimer = null;
+
+const highlightWords = new Set(['fired','humiliated','receipt','receipts','falsifying','security','promotion','walked','every','discovered']);
+
+function animateCaptions() {
+  if(!isPlaying) return;
+  const overlay = document.getElementById('captionOverlay');
+  const chunk = storyWords.slice(captionIndex, captionIndex+3);
+  if(chunk.length === 0) { captionIndex = 0; }
+
+  overlay.innerHTML = chunk.map(w =>
+    `<span class="caption-word${highlightWords.has(w.toLowerCase().replace(/[.,!?]/g,'')) ? ' highlight' : ''}">${w}</span> `
+  ).join('');
+
+  captionIndex += 3;
+  if(captionIndex >= storyWords.length) captionIndex = 0;
+}
+
+// ============================
+// PLAYBACK CONTROLS
+// ============================
+const DURATION = 47;
+
+function togglePlay() {
+  isPlaying = !isPlaying;
+  document.getElementById('playBtn').textContent = isPlaying ? '⏸' : '▶';
+
+  if(isPlaying) {
+    captionTimer = setInterval(animateCaptions, 800);
+    updateProgress();
+  } else {
+    clearInterval(captionTimer);
+    cancelAnimationFrame(animFrame);
+    document.getElementById('captionOverlay').innerHTML = '<span class="caption-word">Paused</span>';
+  }
+}
+
+function updateProgress() {
+  if(!isPlaying) return;
+  progress = Math.min(progress + (100/(DURATION*30)), 100);
+  document.getElementById('progressFill').style.width = progress + '%';
+  const elapsed = Math.round((progress/100)*DURATION);
+  document.getElementById('timeDisplay').textContent = `${Math.floor(elapsed/60)}:${String(elapsed%60).padStart(2,'0')} / 0:${DURATION}`;
+
+  if(progress >= 100) {
+    progress = 0;
+    isPlaying = false;
+    document.getElementById('playBtn').textContent = '▶';
+    clearInterval(captionTimer);
+    document.getElementById('captionOverlay').innerHTML = '<span class="caption-word highlight">THE END 🔥</span>';
+    return;
+  }
+  animFrame = requestAnimationFrame(updateProgress);
+  drawFrame();
+}
+
+function seekVideo(e) {
+  const bar = e.currentTarget;
+  const rect = bar.getBoundingClientRect();
+  progress = ((e.clientX - rect.left) / rect.width) * 100;
+  document.getElementById('progressFill').style.width = progress + '%';
+}
+
+// ============================
+// STORY GENERATION
+// ============================
+function generateNewStory() {
+  currentStoryIndex = (currentStoryIndex + 1) % stories.length;
+  const s = stories[currentStoryIndex];
+
+  // Animate out
+  const card = document.getElementById('storyCard');
+  card.style.opacity = '0';
+  card.style.transform = 'translateY(10px)';
+
+  setTimeout(() => {
+    document.getElementById('storyUsername').textContent = s.username;
+    document.getElementById('storySubreddit').textContent = s.subreddit;
+    document.getElementById('storyTitle').textContent = s.title;
+    document.getElementById('storyBody').textContent = s.body;
+    document.getElementById('storyUpvotes').textContent = s.upvotes;
+    document.getElementById('storyComments').textContent = s.comments;
+    document.getElementById('storyAwards').textContent = s.awards;
+    document.getElementById('avatarLetter').textContent = s.username[2].toUpperCase();
+
+    // Update publish section
+    document.getElementById('publishTitle').value = s.title_post;
+    document.getElementById('publishDesc').value = s.desc;
+    document.getElementById('hashtagList').innerHTML = s.tags.map(t => `<div class="tag">${t}</div>`).join('');
+
+    // Update analytics
+    const scoreEls = document.querySelectorAll('.modal-progress-fill');
+
+    card.style.opacity = '1';
+    card.style.transform = 'translateY(0)';
+
+    // Redraw canvas with new story
+    drawFrame();
+
+    // Update story type pills
+    document.querySelectorAll('.story-pill').forEach(p => {
+      p.classList.toggle('selected', p.dataset.type === s.type);
+    });
+
+    showToast('✨ New viral story generated!');
+  }, 300);
+
+  card.style.transition = 'opacity 0.3s, transform 0.3s';
+}
+
+// ============================
+// BACKGROUND SELECTOR
+// ============================
+function selectBackground(bg, el) {
+  selectedBg = bg;
+  document.querySelectorAll('.bg-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+
+  const bgNames = { gta: 'GTA Driving POV', minecraft: 'Minecraft Parkour', subway: 'Subway Surfer', cooking: 'Satisfying Cooking' };
+  document.getElementById('specBg').textContent = bgNames[bg];
+  drawFrame();
+  showToast(`🎮 Background set to ${bgNames[bg]}`);
+}
+
+// ============================
+// VOICE SELECTOR
+// ============================
+function selectVoice(el) {
+  document.querySelectorAll('.voice-item').forEach(v => v.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedVoice = el.dataset.voice;
+  const name = el.querySelector('.name').textContent;
+  document.getElementById('specVoice').textContent = name;
+
+  // Browser TTS preview
+  if('speechSynthesis' in window) {
+    const utter = new SpeechSynthesisUtterance("Hello! I'm " + name + ", your narrator.");
+    utter.rate = 0.9;
+    utter.pitch = name === 'Marcus' ? 0.7 : name === 'James' ? 0.85 : name === 'Aria' ? 1.2 : 1.1;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter);
+  }
+
+  showToast(`🎙️ Voice set to ${name}`);
+}
+
+// ============================
+// CAPTION STYLE
+// ============================
+function selectCaption(style, el) {
+  document.querySelectorAll('.caption-style-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ============================
+// PLATFORM CONNECT
+// ============================
+function connectPlatform(platform) {
+  if(platform === 'tiktok') {
+    if(!tiktokConnected) {
+      const url = prompt('Enter your TikTok profile URL or @username:', '@yourchannel');
+      if(url) {
+        tiktokConnected = true;
+        document.getElementById('tiktokStatus').textContent = url;
+        document.getElementById('tiktokDot').classList.add('connected');
+        document.getElementById('tiktokToggleSub').textContent = 'Ready to post';
+        document.getElementById('channelInputSection').style.display = 'block';
+        document.getElementById('tiktokUrl').value = url;
+        showToast('✅ TikTok connected!');
+      }
+    } else {
+      tiktokConnected = false;
+      document.getElementById('tiktokStatus').textContent = 'Not connected';
+      document.getElementById('tiktokDot').classList.remove('connected');
+      document.getElementById('tiktokToggleSub').textContent = 'Connect TikTok first';
+    }
+  } else {
+    if(!youtubeConnected) {
+      const url = prompt('Enter your YouTube channel URL:', 'youtube.com/@yourchannel');
+      if(url) {
+        youtubeConnected = true;
+        document.getElementById('youtubeStatus').textContent = url;
+        document.getElementById('youtubeDot').classList.add('connected');
+        document.getElementById('youtubeToggleSub').textContent = 'Ready to post';
+        document.getElementById('channelInputSection').style.display = 'block';
+        document.getElementById('youtubeUrl').value = url;
+        showToast('✅ YouTube connected!');
+      }
+    } else {
+      youtubeConnected = false;
+      document.getElementById('youtubeStatus').textContent = 'Not connected';
+      document.getElementById('youtubeDot').classList.remove('connected');
+      document.getElementById('youtubeToggleSub').textContent = 'Connect YouTube first';
+    }
+  }
+}
+
+function saveChannels() {
+  showToast('✅ Channels saved!');
+  document.getElementById('channelInputSection').style.display = 'none';
+}
+
+// ============================
+// SCHEDULE TOGGLE
+// ============================
+function toggleSchedule(el) {
+  el.classList.toggle('on');
+  const input = document.getElementById('scheduleInput');
+  input.style.display = el.classList.contains('on') ? 'block' : 'none';
+  if(el.classList.contains('on')) {
+    const best = new Date();
+    best.setHours(20, 0, 0, 0);
+    if(best < new Date()) best.setDate(best.getDate()+1);
+    document.getElementById('scheduleTime').value = best.toISOString().slice(0,16);
+  }
+}
+
+// ============================
+// VIDEO GENERATION
+// ============================
+function generateVideo() {
+  const modal = document.getElementById('genModal');
+  modal.classList.add('show');
+
+  const steps = [
+    { id: 'step1', label: 'Story generated & formatted', delay: 0 },
+    { id: 'step2', label: 'Rendering narrator audio...', delay: 2000 },
+    { id: 'step3', label: 'Composing background footage', delay: 5000 },
+    { id: 'step4', label: 'Syncing captions to voice', delay: 9000 },
+    { id: 'step5', label: 'Encoding final 9:16 video', delay: 13000 },
+  ];
+
+  const progresses = [20, 40, 60, 80, 100];
+
+  steps.forEach((step, i) => {
+    setTimeout(() => {
+      // Mark previous as done
+      if(i > 0) {
+        const prev = document.getElementById(steps[i-1].id);
+        prev.classList.remove('active');
+        prev.classList.add('done');
+        prev.querySelector('.step-icon').textContent = '✓';
+      }
+      const el = document.getElementById(step.id);
+      el.classList.add('active');
+      el.querySelector('.step-icon').textContent = '↻';
+      document.getElementById('modalProgressFill').style.width = progresses[i] + '%';
+    }, step.delay);
+  });
+
+  setTimeout(() => {
+    document.getElementById('step5').classList.remove('active');
+    document.getElementById('step5').classList.add('done');
+    document.getElementById('step5').querySelector('.step-icon').textContent = '✓';
+    document.getElementById('modalTitle').textContent = '🎉 Video Ready!';
+    document.getElementById('modalDesc').textContent = 'Your 47-second viral clip is ready to publish!';
+    document.getElementById('modalStatus').textContent = '';
+    document.getElementById('modalEmoji').textContent = '🔥';
+    document.getElementById('modalProgressFill').style.width = '100%';
+    videoGenerated = true;
+
+    setTimeout(() => {
+      modal.classList.remove('show');
+      showToast('🎬 Video generated! Ready to publish.');
+
+      // Narrator preview
+      speakNarration();
+    }, 1800);
+  }, 16000);
+
+  // Simulate browser narration during generation
+  setTimeout(() => {
+    if('speechSynthesis' in window) {
+      const story = document.getElementById('storyBody').textContent.slice(0, 300);
+      const utter = new SpeechSynthesisUtterance(story);
+      utter.rate = 0.95;
+      utter.volume = 0.3;
+      speechSynthesis.cancel();
+      speechSynthesis.speak(utter);
+    }
+  }, 2000);
+}
+
+function speakNarration() {
+  if('speechSynthesis' in window) {
+    const title = document.getElementById('storyTitle').textContent;
+    const utter = new SpeechSynthesisUtterance(title);
+    utter.rate = 0.9;
+    utter.volume = 0.6;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(utter);
+  }
+}
+
+// ============================
+// PUBLISH
+// ============================
+function publishVideo() {
+  if(!tiktokConnected && !youtubeConnected) {
+    showToast('⚠️ Connect TikTok or YouTube first!', true);
+    return;
+  }
+
+  const modal = document.getElementById('publishModal');
+  modal.classList.add('show');
+
+  const pubSteps = ['pub1','pub2','pub3','pub4'];
+  const progresses = [25, 50, 75, 100];
+
+  pubSteps.forEach((id, i) => {
+    setTimeout(() => {
+      if(i > 0) {
+        const prev = document.getElementById(pubSteps[i-1]);
+        prev.classList.remove('active');
+        prev.classList.add('done');
+        prev.querySelector('.step-icon').textContent = '✓';
+      }
+      const el = document.getElementById(id);
+      el.classList.add('active');
+      el.querySelector('.step-icon').textContent = '↻';
+      document.getElementById('pubProgressFill').style.width = progresses[i] + '%';
+    }, i * 2200);
+  });
+
+  setTimeout(() => {
+    document.getElementById('pub4').classList.remove('active');
+    document.getElementById('pub4').classList.add('done');
+    document.getElementById('pub4').querySelector('.step-icon').textContent = '✓';
+    document.getElementById('pubProgressFill').style.width = '100%';
+
+    setTimeout(() => {
+      modal.classList.remove('show');
+      showToast('🚀 Published successfully to all platforms!');
+    }, 1200);
+  }, 4 * 2200);
+}
+
+// ============================
+// REGENERATE METADATA
+// ============================
+function regenerateMetadata() {
+  const s = stories[currentStoryIndex];
+  const variations = [
+    `You won't BELIEVE what happened at this company meeting 😤 #WorkDrama #Reddit`,
+    `POV: You finally get revenge on your nightmare boss 🔥 #Revenge #Shorts`,
+    `He tried to humiliate her... big mistake 😈 #Reddit #Satisfying`,
+    `The audacity of this boss is UNREAL 🤯 #AITA #WorkStory`
+  ];
+  const randomTitle = variations[Math.floor(Math.random() * variations.length)];
+  document.getElementById('publishTitle').value = randomTitle;
+  showToast('🔄 Title & tags regenerated!');
+}
+
+// ============================
+// STORY TYPE PILLS
+// ============================
+document.querySelectorAll('.story-pill').forEach(pill => {
+  pill.addEventListener('click', function() {
+    document.querySelectorAll('.story-pill').forEach(p => p.classList.remove('selected'));
+    this.classList.add('selected');
+    const matching = stories.findIndex(s => s.type === this.dataset.type);
+    if(matching !== -1 && matching !== currentStoryIndex) {
+      currentStoryIndex = matching - 1;
+      generateNewStory();
+    }
+  });
+});
+
+// ============================
+// TOAST
+// ============================
+function showToast(msg, isWarning = false) {
+  const toast = document.getElementById('toast');
+  const msgEl = document.getElementById('toastMsg');
+  msgEl.textContent = msg;
+  toast.style.borderColor = isWarning ? 'var(--accent2)' : 'var(--green)';
+  toast.style.color = isWarning ? 'var(--accent2)' : 'var(--green)';
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// Close modals on click outside
+document.getElementById('genModal').addEventListener('click', function(e) {
+  if(e.target === this) this.classList.remove('show');
+});
+document.getElementById('publishModal').addEventListener('click', function(e) {
+  if(e.target === this) this.classList.remove('show');
+});
+
+// Initial canvas draw loop
+setInterval(drawFrame, 33);
+</script>
+</body>
+</html>
